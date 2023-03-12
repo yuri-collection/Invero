@@ -4,12 +4,14 @@ import cc.trixey.invero.common.Object
 import cc.trixey.invero.core.Session
 import cc.trixey.invero.core.icon.IconElement
 import cc.trixey.invero.core.util.session
+import cc.trixey.invero.core.util.translateFormattedMessage
 import cc.trixey.invero.ui.bukkit.PanelContainer
 import cc.trixey.invero.ui.common.Panel
 import cc.trixey.invero.ui.common.panel.ElementalPanel
 import cc.trixey.invero.ui.common.util.getSiblings
 import org.bukkit.entity.Player
 import taboolib.module.kether.ScriptFrame
+import taboolib.module.kether.deepVars
 import taboolib.module.kether.script
 
 /**
@@ -87,4 +89,11 @@ fun ScriptFrame.session(): Session? {
     return player().session
 }
 
-fun ScriptFrame.parse(string: String) = session()?.parse(string) ?: string
+fun ScriptFrame.parse(string: String): String {
+    val session = session()
+    if (session != null) {
+        return session.parse(string)
+    } else {
+        return string.translateFormattedMessage(player(),deepVars())
+    }
+}

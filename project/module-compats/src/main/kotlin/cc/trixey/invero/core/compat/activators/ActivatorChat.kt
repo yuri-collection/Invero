@@ -3,6 +3,7 @@ package cc.trixey.invero.core.compat.activators
 import cc.trixey.invero.common.Invero
 import cc.trixey.invero.common.MenuActivator
 import cc.trixey.invero.core.compat.DefActivator
+import cc.trixey.invero.ui.bukkit.util.proceed
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -28,8 +29,9 @@ class ActivatorChat(private val chats: List<String> = emptyList()) : MenuActivat
         fun e(e: AsyncPlayerChatEvent) {
             val player = e.player
             val message = e.message
-
-            e.isCancelled = Invero.API.getRegistry().callActivator(player, "CHAT", message)
+            Invero.API.getRegistry().callActivator(player, "CHAT", message).proceed {
+                e.isCancelled = true
+            }
         }
 
         @SubscribeEvent(ignoreCancelled = true)
@@ -37,7 +39,9 @@ class ActivatorChat(private val chats: List<String> = emptyList()) : MenuActivat
             val player = e.player
             val message = e.message
 
-            e.isCancelled = Invero.API.getRegistry().callActivator(player, "CHAT", message)
+            Invero.API.getRegistry().callActivator(player, "CHAT", message).proceed {
+                e.isCancelled = true
+            }
         }
 
     }

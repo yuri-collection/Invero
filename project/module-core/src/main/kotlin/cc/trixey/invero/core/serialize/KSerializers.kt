@@ -2,11 +2,11 @@
 @file:RuntimeDependencies(
     RuntimeDependency(
         value = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.5.0-RC",
-        relocate = ["!kotlin.", "!kotlin@kotlin_version_escape@.", "!kotlinx.", "!kotlinx_1_5_0_RC."],
+        relocate = ["!kotlin.", "!kotlin1810.", "!kotlinx.", "!kotlinx150."],
         transitive = false
-    ), RuntimeDependency(
+    ),RuntimeDependency(
         value = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.5.0-RC",
-        relocate = ["!kotlin.", "!kotlin@kotlin_version_escape@.", "!kotlinx.", "!kotlinx_1_5_0_RC."],
+        relocate = ["!kotlin.", "!kotlin1810.", "!kotlinx.", "!kotlinx150."],
         transitive = false
     )
 )

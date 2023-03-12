@@ -5,6 +5,4 @@ dependencies {
 
     compileModule("module-common")
     compileModule("module-core")
-
-    implementation("org.bstats:bstats-bukkit:3.0.0")
 }

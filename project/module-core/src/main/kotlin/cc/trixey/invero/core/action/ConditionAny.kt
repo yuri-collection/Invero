@@ -35,11 +35,11 @@ class ConditionAny(
 
     override fun run(context: Context): CompletableFuture<Boolean> {
         var amount = 0
-        return conditions.any {
-            it.evalInstant(context, false).proceed { amount++ } || amount >= atLeast
-        }.let {
-            CompletableFuture.completedFuture(it)
-        }
+        return if (conditions.any { it.evalInstant(context, false).proceed { amount++ } || amount >= atLeast }) {
+            then?.run(context)
+        } else {
+            `else`?.run(context)
+        } ?: CompletableFuture.completedFuture(false)
     }
 
 }

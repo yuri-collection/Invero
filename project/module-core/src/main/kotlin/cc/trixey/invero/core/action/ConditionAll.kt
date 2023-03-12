@@ -26,11 +26,12 @@ class ConditionAll(
         require(then != null || `else` != null) { "At least one type of response is required for IF structure" }
     }
 
-    override fun run(context: Context): CompletableFuture<Boolean> = CompletableFuture
-        .completedFuture(
-            conditions.all {
-                it.evalInstant(context, false)
-            }
-        )
+    override fun run(context: Context): CompletableFuture<Boolean> {
+        return if (conditions.all { it.evalInstant(context, false) }) {
+            then?.run(context)
+        } else {
+            `else`?.run(context)
+        } ?: CompletableFuture.completedFuture(false)
+    }
 
 }

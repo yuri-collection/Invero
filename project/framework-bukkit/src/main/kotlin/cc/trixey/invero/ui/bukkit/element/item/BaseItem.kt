@@ -64,7 +64,7 @@ abstract class BaseItem<T : Element>(override val panel: Panel) : Supplier<ItemS
         postRender {
             val slot = locatingAbsoluteSlot(it, panel)
             if (slot >= 0) {
-                window.inventory[slot] = value.copyUIMarked(viewer,slot)
+                window.inventory[slot] = value.copyUIMarked(viewer, slot)
             }
         }
     }

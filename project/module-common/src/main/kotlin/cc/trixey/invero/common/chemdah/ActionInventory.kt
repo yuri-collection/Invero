@@ -111,7 +111,7 @@ class ActionInventory {
                     }
                 }
 
-                "add" -> {
+                "add", "give" -> {
                     val item = it.nextParsedAction()
                     actionFuture { future ->
                         newFrame(item).run<ItemStack>().thenApply { stack ->

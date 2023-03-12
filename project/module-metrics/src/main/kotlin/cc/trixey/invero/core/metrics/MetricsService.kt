@@ -1,11 +1,12 @@
 package cc.trixey.invero.core.metrics
 
-import org.bstats.bukkit.Metrics
-import org.bstats.charts.CustomChart
 import taboolib.common.LifeCycle
 import taboolib.common.inject.ClassVisitor
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
 import taboolib.library.reflex.ClassMethod
+import taboolib.module.metrics.CustomChart
+import taboolib.module.metrics.Metrics
 import taboolib.platform.util.bukkitPlugin
 import java.util.function.Supplier
 
@@ -37,7 +38,7 @@ class MetricsService : ClassVisitor(0) {
         @Awake(LifeCycle.LOAD)
         fun init() {
             val pluginId = 17655
-            metrics = Metrics(bukkitPlugin, pluginId)
+            metrics = Metrics(pluginId, bukkitPlugin.description.version, Platform.BUKKIT)
         }
 
     }

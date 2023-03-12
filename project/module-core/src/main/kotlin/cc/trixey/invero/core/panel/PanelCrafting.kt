@@ -58,7 +58,9 @@ class PanelCrafting(
             layout?.search(" ")?.forEach { free(it.slot) }
 
             listener {
-                crafting.listener?.run(context = Context(session.viewer, session))
+                crafting.listener?.run(
+                    context = session.getVariable("@context") as? Context? ?: Context(session.viewer, session)
+                )
             }
         }
 

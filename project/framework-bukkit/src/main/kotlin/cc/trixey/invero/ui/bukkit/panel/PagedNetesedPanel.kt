@@ -3,6 +3,7 @@ package cc.trixey.invero.ui.bukkit.panel
 import cc.trixey.invero.ui.bukkit.BukkitPanel
 import cc.trixey.invero.ui.bukkit.PanelContainer
 import cc.trixey.invero.ui.common.Element
+import cc.trixey.invero.ui.common.Panel
 import cc.trixey.invero.ui.common.Pos
 import cc.trixey.invero.ui.common.Scale
 import cc.trixey.invero.ui.common.event.ClickType
@@ -48,6 +49,8 @@ open class PagedNetesedPanel(
     override fun render() = currentPanel.rerender()
 
     override fun isElementValid(element: Element) = currentPanel.isElementValid(element)
+
+    override fun isPanelValid(panel: Panel) = currentPanel == panel
 
     override fun handleClick(pos: Pos, clickType: ClickType, e: InventoryClickEvent?): Boolean {
         return currentPanel.handleClick(pos, clickType, e)

@@ -4,8 +4,6 @@ import cc.trixey.invero.ui.bukkit.api.isRegistered
 import cc.trixey.invero.ui.bukkit.panel.CraftingPanel
 import cc.trixey.invero.ui.bukkit.util.clickType
 import cc.trixey.invero.ui.bukkit.util.synced
-import cc.trixey.invero.ui.common.panel.IOPanel
-import cc.trixey.invero.ui.common.util.anyInstancePanel
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.*
 import org.bukkit.inventory.Inventory
@@ -156,10 +154,7 @@ class InventoryVanilla(override val window: BukkitWindow) : ProxyBukkitInventory
                 .filterIsInstance<CraftingPanel>()
                 .sortedBy { it.locate }
                 .sortedByDescending { it.weight }
-                .also {
-                    println("3 ${it.isEmpty()}")
-                    if (it.isEmpty()) return handleClick(e)
-                }
+                .also { if (it.isEmpty()) return handleClick(e) }
                 .forEach {
                     val previous = insertItem.amount
                     val result = it.insert(insertItem.clone())
@@ -171,8 +166,6 @@ class InventoryVanilla(override val window: BukkitWindow) : ProxyBukkitInventory
                     }
                     if (result <= 0) return@forEach
                 }
-
-            println(4)
             e.currentItem?.amount = insertItem.amount
         }
         // IO Panel -> playerInventory

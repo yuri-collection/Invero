@@ -19,7 +19,7 @@ object KetherHandler {
 
     private val namespace = listOf("invero")
 
-    fun invoke(source: String, player: Player?, vars: Map<String, Any>): CompletableFuture<Any?> = alert {
+    fun invoke(source: String, player: Player?, vars: Map<String, Any?>): CompletableFuture<Any?> = alert {
         KetherShell.eval(
             source,
             sender = if (player != null) adaptPlayer(player) else console(),
@@ -28,7 +28,7 @@ object KetherHandler {
         )
     } ?: CompletableFuture.completedFuture(null)
 
-    fun parseInline(source: String, player: Player?, vars: Map<String, Any>) = alert {
+    fun parseInline(source: String, player: Player?, vars: Map<String, Any?>) = alert {
         KetherFunction.parse(
             source,
             sender = if (player != null) adaptPlayer(player) else console(),

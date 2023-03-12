@@ -24,6 +24,7 @@ import kotlinx.serialization.json.*
 internal object SelectorAction : JsonContentPolymorphicSerializer<Action>(Action::class) {
 
     private val serializers = buildMap<DeserializationStrategy<Action>, Set<String>> {
+        put(ActionKether.serializer(), setOf("kether"))
         put(ConditionIf.serializer(), setOf("if"))
         put(ConditionIfNot.serializer(), setOf("if not", "if_not"))
         put(ConditionAll.serializer(), setOf("all"))
@@ -40,8 +41,7 @@ internal object SelectorAction : JsonContentPolymorphicSerializer<Action>(Action
         return if (element is JsonPrimitive) {
             ActionKether.serializer()
         } else if (element is JsonArray) {
-            if (element.jsonArray.firstOrNull() is JsonPrimitive) ActionKether.serializer()
-            else NetesedAction.serializer()
+             NetesedAction.serializer()
         } else {
             val keys = element.jsonObject.keys
             serializers

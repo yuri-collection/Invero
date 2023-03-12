@@ -14,7 +14,6 @@ import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
 import taboolib.common.platform.command.subCommand
 import taboolib.common.platform.function.adaptCommandSender
-import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.platform.function.submitAsync
 import taboolib.module.chat.component
 import taboolib.platform.util.bukkitPlugin

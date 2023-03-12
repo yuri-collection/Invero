@@ -50,7 +50,7 @@ fun DependencyHandler.`framework`() {
 
 fun DependencyHandler.`adventure`() {
     usedAdventureModules.forEach {
-        add("compileOnly", it)
+        add("implementation", it)
     }
 }
 

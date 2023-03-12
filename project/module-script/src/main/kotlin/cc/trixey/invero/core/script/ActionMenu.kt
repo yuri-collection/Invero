@@ -39,7 +39,7 @@ object ActionMenu {
     }
 
     private fun handlerMenuTitle(it: QuestReader) =
-        when (it.expects("get", "set", "pause", "resume", "update")) {
+        when (it.expects("get", "set", "to", "pause", "resume", "update")) {
             "get" -> actionNow { session()?.window?.title }
 
             "set", "to" -> {

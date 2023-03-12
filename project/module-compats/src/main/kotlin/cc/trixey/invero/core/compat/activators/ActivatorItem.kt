@@ -6,6 +6,7 @@ import cc.trixey.invero.common.chemdah.InferItem
 import cc.trixey.invero.common.chemdah.InferItem.Companion.toInferItem
 import cc.trixey.invero.core.compat.DefActivator
 import cc.trixey.invero.core.util.session
+import cc.trixey.invero.ui.bukkit.util.proceed
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -37,7 +38,9 @@ class ActivatorItem(private val inferItem: InferItem, private val raw: JsonEleme
             if (e.player.session != null) return
             val item = e.item ?: return
 
-            e.isCancelled = Invero.API.getRegistry().callActivator(e.player, "ITEM", item)
+            Invero.API.getRegistry().callActivator(e.player, "ITEM", item).proceed {
+                e.isCancelled = true
+            }
         }
 
     }

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalSerializationApi::class)
-
 package cc.trixey.invero.core.api
 
 import cc.trixey.invero.common.Invero
@@ -53,6 +51,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class DefaultMenuManager : InveroMenuManager {
 
+    @OptIn(ExperimentalSerializationApi::class)
     private val module = SerializersModule {
 
         polymorphic(Menu::class) {

@@ -1,57 +1,41 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
-    id("io.izzel.taboolib") version taboolibPluginVersion
-}
-
-taboolib {
-    version = taboolibVersion
-
-    usedTaboolibModules.forEach { install(it) }
-
-    description {
-        name = rootName
-
-        contributors {
-            name("Arasple")
-        }
-
-        dependencies {
-            name("PlaceholderAPI").optional(true)
-            name("NeigeItems").optional(true)
-            name("Zaphkiel").optional(true)
-            name("HeadDatabase").optional(true)
-            name("Oraxen").optional(true)
-            name("ItemsAdder").optional(true)
-        }
-
-        bukkitNodes = HashMap<String, Any>().apply {
-            put("api-version", 1.13)
-            put("built-date", currentISODate)
-            put("built-by", systemUserName)
-            put("built-os", systemOS)
-            put("built-ip", systemIP)
-        }
-
-    }
-
-    relocate("kotlinx.serialization", "kotlinx_1_5_0_RC.serialization")
-    relocate("org.bstats", "$rootGroup.core.metrics.bstats")
-
-    classifier = null
+    id("com.github.johnrengelman.shadow") version shadowJarVersion
 }
 
 dependencies {
+    compileTabooLib()
     compileCore(11903)
 
     rootProject
         .childProjects["project"]!!
         .childProjects
-        .forEach {
-            taboo(it.value)
-        }
+        .values
+        .forEach { implementation(it) }
 }
 
-tasks.jar {
-    archiveBaseName.set(rootName)
-    archiveVersion.set(rootVersion)
-    includeEmptyDirs = false
+tasks {
+    withType<ShadowJar> {
+        // options
+        archiveAppendix.set("")
+        archiveClassifier.set("")
+        archiveVersion.set(rootVersion)
+        archiveBaseName.set(rootName)
+        // exclude
+        exclude("META-INF/**")
+        exclude("com/**", "org/**")
+        // adventure
+        relocate("net.kyori", "$rootGroup.common.adventure")
+        // taboolib
+        relocate("taboolib", "$rootGroup.taboolib")
+        relocate("tb", "$rootGroup.taboolib")
+        relocate("org.tabooproject", "$rootGroup.taboolib.library")
+        // kotlin
+        relocate("kotlin.", "kotlin1810.") { exclude("kotlin.Metadata") }
+        relocate("kotlinx.serialization", "kotlinx150.serialization")
+    }
+    build {
+        dependsOn(shadowJar)
+    }
 }

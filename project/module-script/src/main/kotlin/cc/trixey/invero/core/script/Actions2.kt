@@ -1,7 +1,7 @@
 package cc.trixey.invero.core.script
 
-import cc.trixey.invero.core.script.player
 import cc.trixey.invero.core.script.loader.InveroKetherParser
+import taboolib.common.platform.function.console
 import taboolib.module.kether.combinationParser
 
 /**
@@ -29,6 +29,15 @@ internal fun command() = combinationParser {
             newFrame(s).run<Any>().getNow(null)?.toString()?.let {
                 player().performCommand(it)
             }
+        }
+    }
+}
+
+@InveroKetherParser(["console"])
+internal fun actionConsole() = combinationParser {
+    it.group(text()).apply(it) { s ->
+        now {
+            console().performCommand(parse(s))
         }
     }
 }

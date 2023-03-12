@@ -5,8 +5,8 @@ import cc.trixey.invero.core.AgentPanel
 import cc.trixey.invero.core.BaseMenu
 import cc.trixey.invero.core.icon.Icon
 import cc.trixey.invero.core.panel.IconContainer
-import org.bstats.charts.AdvancedPie
-import org.bstats.charts.SingleLineChart
+import taboolib.module.metrics.charts.AdvancedPie
+import taboolib.module.metrics.charts.SingleLineChart
 import java.util.concurrent.Callable
 
 /**

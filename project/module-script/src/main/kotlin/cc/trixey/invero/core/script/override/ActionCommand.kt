@@ -1,7 +1,7 @@
 package cc.trixey.invero.core.script.override
 
 import cc.trixey.invero.core.script.loader.InveroKetherParser
-import cc.trixey.invero.core.script.session
+import cc.trixey.invero.core.script.parse
 import taboolib.common.platform.function.console
 import taboolib.library.kether.ParsedAction
 import taboolib.module.kether.*
@@ -22,7 +22,7 @@ class ActionCommand(val command: ParsedAction<*>, private val type: Type) : Scri
 
             // 虽有损耗，可以接受
             val command = it.toString().trimIndent().let { content ->
-                frame.session()?.parse(content) ?: content
+                frame.parse(content)
             }
 
             when (type) {

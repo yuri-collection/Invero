@@ -1,6 +1,7 @@
 package cc.trixey.invero.core.util
 
-import cc.trixey.invero.common.adventure.Adventure
+import cc.trixey.invero.common.adventure.parseMiniMessage
+import cc.trixey.invero.common.adventure.parseMiniMessageAndSend
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.adaptPlayer
 import taboolib.module.chat.colored
@@ -23,11 +24,11 @@ import taboolib.platform.compat.replacePlaceholder
  * - MiniMessage Parse (if supported)
  * - TabooLib Colored
  */
-fun String.translateFormattedMessage(player: Player, variables: Map<String, Any> = emptyMap()) =
+fun String.translateFormattedMessage(player: Player, variables: Map<String, Any?> = emptyMap()) =
     KetherHandler
         .parseInline(this, player, variables)
         .replacePlaceholder(player)
-        .let { if (Adventure.isSupported) Adventure.parse(it) else it }
+        .parseMiniMessage()
         .colored()
 
 /**
@@ -38,18 +39,12 @@ fun String.translateFormattedMessage(player: Player, variables: Map<String, Any>
  * - TabooLib Colored
  * - MiniMessage Component Send (if supported) (else send noraml message)
  */
-fun String.sendFormattedComponent(player: Player, variables: Map<String, Any> = emptyMap()) =
+fun String.sendFormattedMiniMessageComponent(player: Player, variables: Map<String, Any> = emptyMap()) =
     KetherHandler
         .parseInline(this, player, variables)
         .replacePlaceholder(player)
         .colored()
-        .let {
-            if (Adventure.isSupported) {
-                Adventure.parseAndSend(it, player)
-            } else {
-                player.sendMessage(it)
-            }
-        }
+        .parseMiniMessageAndSend(player)
 
 /**
  * 发送 TabooLib ComponentText
