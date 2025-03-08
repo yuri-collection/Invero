@@ -11,7 +11,11 @@ plugins {
 
 taboolib {
 
+    version { taboolib = "6.2.3" }
+
     env {
+        // 镜像中央仓库
+        repoCentral = "https://repo.huaweicloud.com/repository/maven/"
         // 安装模块
         install(
             Basic,
@@ -29,7 +33,21 @@ taboolib {
         install("platform-bukkit-impl")
     }
 
-    version { taboolib = "6.2.3" }
+    description {
+        name(rootProject.name)
+
+        desc("灵活强大的多功能容器 GUI 解决方案")
+
+        contributors {
+            name("Arasple")
+            name("TheFloodDragon")
+        }
+
+        links {
+            name("homepage").url("https://invero.8aka.org/")
+        }
+
+    }
 
     // 重定向
     relocate("kotlinx.serialization", "kotlinx180.serialization")
