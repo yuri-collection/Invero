@@ -10,7 +10,8 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.AMPE
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.SECTION_CHAR
 import taboolib.module.nms.MinecraftVersion
 
-fun String.parseAsJson(): String = Message.parseAsJson(this)
+// TODO Implement Writing components to displayName and lores
+fun String.parseAsJson(): String = this
 
 /**
  * Message
