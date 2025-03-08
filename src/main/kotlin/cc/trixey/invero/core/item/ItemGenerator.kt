@@ -1,6 +1,5 @@
 package cc.trixey.invero.core.item
 
-import cc.trixey.invero.common.message.Message
 import cc.trixey.invero.common.message.parseAsJson
 import cc.trixey.invero.core.Context
 import cc.trixey.invero.core.icon.IconElement
@@ -64,7 +63,7 @@ private fun ItemStack.generateProperties(
     return modifyMeta<ItemMeta> {
         // 显示名称
         frameBy { name }?.let {
-            setDisplayName(Message.parseAsLegacy(context.parse(it).prefixColored))
+            setDisplayName(context.parse(it).prefixColored.parseAsJson())
         }
         // 显示描述
         frameBy { lore }?.let {
@@ -135,14 +134,14 @@ private val String.prefixColored: String
 
 private fun List<String>.loreColored(enhancedProcess: Boolean?): List<String> {
     return if (enhancedProcess != true) {
-        map { Message.parseAsLegacy(it.prefixColored) }
+        map { it.prefixColored.parseAsJson() }
     } else {
         val iterator = iterator()
 
         buildList {
             while (iterator.hasNext()) {
                 val it = iterator.next()
-                this += it.split("\\n").map { Message.parseAsLegacy(it.prefixColored) }
+                this += it.split("\\n").map { it.prefixColored.parseAsJson() }
             }
         }
     }
