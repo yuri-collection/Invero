@@ -69,4 +69,10 @@ interface NMS {
 
     fun getContainerId(player: Player): Int
 
+    /**
+     * 获取玩家当前打开的容器ID
+     * 用于检查玩家是否正在查看特定窗口
+     */
+    fun getActiveContainerId(player: Player): Int
+
 }

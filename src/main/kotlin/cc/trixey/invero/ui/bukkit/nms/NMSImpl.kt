@@ -156,6 +156,24 @@ class NMSImpl : NMS {
         }
     }
 
+    override fun getActiveContainerId(player: Player): Int {
+        if (!player.isOnline) return -1
+        try {
+            player as CraftPlayer
+            return if (isUniversal) {
+                // 1.17+
+                player.handle.getProperty<Container>("containerMenu")?.getProperty<Int>("containerId") ?: -1
+            } else {
+                // 旧版本
+                player.handle.activeContainer?.windowId ?: -1
+            }
+        } catch (e: Exception) {
+            // 如果发生异常，返回-1表示无效容器
+            e.printStackTrace()
+            return -1
+        }
+    }
+
     private fun ItemStack?.asNMSCopy(): net.minecraft.server.v1_16_R3.ItemStack {
         return CraftItemStack.asNMSCopy(this)
     }
