@@ -16,10 +16,10 @@ import org.bukkit.Sound
 class GeneratorSounds : BaseGenerator() {
 
     override fun generate() {
-        generated = Sound.entries.map {
+        generated = Sound.values().map { sound ->
             sourceObject {
-                put("name", it.name)
-                put("ordinal", it.ordinal)
+                put("name", sound.name())
+                put("ordinal", sound.ordinal())
             }
         }
     }
