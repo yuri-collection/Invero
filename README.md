@@ -37,3 +37,7 @@ Invero 为 [TrMenu](https://github.com/CoderKuo/TrMenu) 原作者 [Arasple](http
 ```
 
 > 参数 -PDeleteCode 表示移除所有逻辑代码以减少体积。
+
+# Bstats
+
+[![](https://bstats.org/signatures/bukkit/Invero.svg)](https://bstats.org/plugin/bukkit/Invero/17655)
