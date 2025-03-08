@@ -38,11 +38,6 @@ taboolib {
 
         desc("灵活强大的多功能容器 GUI 解决方案")
 
-        contributors {
-            name("Arasple")
-            name("TheFloodDragon")
-        }
-
         links {
             name("homepage").url("https://invero.8aka.org/")
         }
