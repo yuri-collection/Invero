@@ -5,11 +5,12 @@ plugins {
     java
     kotlin("jvm") version "1.9.22"
     kotlin("plugin.serialization") version "1.9.22"
-    id("io.izzel.taboolib") version "2.0.18"
+    id("io.izzel.taboolib") version "2.0.20"
 }
 
 taboolib {
     relocate("kotlinx.serialization", "kotlinx163.serialization")
+    relocate("org.slf4j", "cc.trixey.invero.libs.slf4j")
 
     env {
         // 安装模块
@@ -28,7 +29,7 @@ taboolib {
         )
         install("platform-bukkit-impl")
     }
-    version { taboolib = "6.2.0-beta15" }
+    version { taboolib = "6.2.3" }
 }
 
 repositories {
@@ -36,17 +37,22 @@ repositories {
     mavenCentral()
     maven("https://jitpack.io")
     maven("https://repo.rosewooddev.io/repository/public/")
+    maven("https://repo.oraxen.com/releases")
 }
 
 dependencies {
-    compileOnly("ink.ptms.core:v12101:12101:mapped")
-    compileOnly("ink.ptms.core:v12101:12101:universal")
+    compileOnly("ink.ptms.core:v12104:12104:mapped")
+    compileOnly("ink.ptms.core:v12104:12104:universal")
     compileOnly("ink.ptms:nms-all:1.0.0")
 
     compileOnly("io.netty:netty-all:4.1.106.Final")
     compileOnly("com.google.code.gson:gson:2.8.9")
     compileOnly("com.google.guava:guava:32.0.0-android")
     compileOnly("com.mojang:brigadier:1.0.18")
+
+    // 添加 SLF4J 依赖
+    taboo("org.slf4j:slf4j-api:1.7.36")
+    taboo("org.slf4j:slf4j-simple:1.7.36")
 
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3")
@@ -55,9 +61,8 @@ dependencies {
     compileOnly("net.kyori:adventure-text-minimessage:4.12.0")
     compileOnly("ink.ptms.adyeshach:all:2.0.0-snapshot-36")
     compileOnly("org.black_ixx:playerpoints:3.1.1")
-    compileOnly("com.github.oraxen:oraxen:1.170.0")
+    compileOnly("io.th0rgal:oraxen:1.170.0")
     compileOnly("ink.ptms:Zaphkiel:2.0.14")
-
 
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
@@ -69,7 +74,7 @@ tasks.withType<JavaCompile> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
             "-Xextended-compiler-checks",
@@ -80,6 +85,6 @@ tasks.withType<KotlinCompile> {
 }
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
