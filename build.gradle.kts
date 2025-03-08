@@ -44,6 +44,19 @@ repositories {
 }
 
 dependencies {
+    compileOnly(kotlin("stdlib"))
+    // Kotlin 序列化
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.0")
+
+    // Adventure API
+    compileOnly("net.kyori:adventure-api:4.19.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
+    compileOnly("net.kyori:adventure-text-serializer-gson:4.19.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.19.0")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
+
+    // Minecraft Core
     compileOnly("ink.ptms.core:v12101:12101:mapped")
     compileOnly("ink.ptms.core:v12101:12101:universal")
     compileOnly("ink.ptms:nms-all:1.0.0")
@@ -52,21 +65,16 @@ dependencies {
     compileOnly("com.google.code.gson:gson:2.8.9")
     compileOnly("com.google.guava:guava:32.0.0-android")
     compileOnly("com.mojang:brigadier:1.0.18")
+    compileOnly("com.mojang:authlib:5.0.51")
 
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.0")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.0")
-    compileOnly("net.kyori:adventure-api:4.19.0")
-    compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
-    compileOnly("net.kyori:adventure-text-serializer-gson:4.19.0")
-    compileOnly("net.kyori:adventure-text-serializer-legacy:4.19.0")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
+    // Compatible Plugins
     compileOnly("ink.ptms.adyeshach:all:2.0.0-snapshot-36")
     compileOnly("org.black_ixx:playerpoints:3.1.1")
     compileOnly("io.th0rgal:oraxen:1.189.0")
     compileOnly("ink.ptms:Zaphkiel:2.0.14")
+    compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
+    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.3-beta-14")
 
-
-    compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
 
@@ -98,7 +106,6 @@ kotlin {
 
 // Java 构建设置
 java {
-    withSourcesJar()
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
