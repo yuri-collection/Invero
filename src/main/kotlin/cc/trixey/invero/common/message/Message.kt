@@ -51,6 +51,14 @@ object Message {
     }
 
     /**
+     * 仅将&转换为§，不生成JSON（用于物品显示）
+     */
+    @JvmStatic
+    fun parseAsLegacy(target: String): String {
+        return translateAmpersandColor(target)
+    }
+
+    /**
      * 将 Json字符串 转换成 [Component]
      */
     @JvmStatic

@@ -1,5 +1,6 @@
 package cc.trixey.invero.ui.bukkit
 
+import cc.trixey.invero.common.message.Message
 import cc.trixey.invero.common.message.parseAsJson
 import cc.trixey.invero.ui.bukkit.api.isRegistered
 import cc.trixey.invero.ui.bukkit.nms.handler
@@ -24,12 +25,12 @@ import taboolib.common.platform.function.submitAsync
 class InventoryVanilla(override val window: BukkitWindow) : ProxyBukkitInventory {
 
     val container = if (containerType.isOrdinaryChest)
-        Bukkit.createInventory(Holder(window), containerType.containerSize, inventoryTitle.parseAsJson())
+        Bukkit.createInventory(Holder(window), containerType.containerSize, Message.parseAsLegacy(inventoryTitle))
     else try {
         Bukkit.createInventory(
             Holder(window),
             InventoryType.valueOf(containerType.bukkitType),
-            inventoryTitle.parseAsJson()
+            Message.parseAsLegacy(inventoryTitle)
         )
     } catch (e: Throwable) {
         error("Not supported inventory type (${containerType.bukkitType}) yet")
