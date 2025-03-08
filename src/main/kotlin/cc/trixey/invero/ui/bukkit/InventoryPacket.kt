@@ -1,6 +1,5 @@
 package cc.trixey.invero.ui.bukkit
 
-import cc.trixey.invero.common.message.Message
 import cc.trixey.invero.common.message.parseAsJson
 import cc.trixey.invero.ui.bukkit.nms.handler
 import cc.trixey.invero.ui.bukkit.nms.persistContainerId
@@ -92,8 +91,8 @@ class InventoryPacket(override val window: BukkitWindow) : ProxyBukkitInventory 
         updatePlayerItems()
         val replaced =
             runCatching { FontImageWrapper.replaceFontImages(viewer, inventoryTitle) }.getOrNull() ?: inventoryTitle
-        val titleDisplay = Message.parseAsLegacy(replaced)
-        handler.sendWindowOpen(viewer, persistContainerId, containerType, titleDisplay)
+        val json = replaced.parseAsJson()
+        handler.sendWindowOpen(viewer, persistContainerId, containerType, json)
         update()
 
         // temp

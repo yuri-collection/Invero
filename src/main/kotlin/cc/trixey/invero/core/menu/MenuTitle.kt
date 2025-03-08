@@ -2,7 +2,6 @@
 
 package cc.trixey.invero.core.menu
 
-import cc.trixey.invero.common.message.Message
 import cc.trixey.invero.core.Session
 import cc.trixey.invero.core.animation.CycleMode
 import cc.trixey.invero.core.animation.toCyclic
@@ -40,7 +39,11 @@ class MenuTitle(
     ) {
 
         @Transient
-        val value = Message.parseAsLegacy(valuex)
+        val value = valuex
+            .component()
+            .build()
+            .toRawMessage()
+            .replace("\\u0026", "&")
     }
 
     @Transient
