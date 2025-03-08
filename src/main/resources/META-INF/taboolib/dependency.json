@@ -12,7 +12,7 @@
       "kotlin.",
       "kotlin${kr}.",
       "kotlinx.",
-      "kotlinx${krx}.",
+      "kotlinx.${krx}.",
     ],
     "external": true
   },
