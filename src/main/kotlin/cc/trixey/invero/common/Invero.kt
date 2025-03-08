@@ -50,7 +50,7 @@ object Invero {
         console().sendMessage(" ")
         console().sendMessage("§8Invero §7v${bukkitPlugin.description.version} §8- §7MC 1.21.4")
         console().sendMessage("§7By Arasple, Maintained by Lythrilla")
-        console().sendMessage("§7QQ群: §f489868834 §8| §7GitHub: §fhttps://github.com/ythrilla/Invero")
+        console().sendMessage("§7QQ群: §f489868834 §8| §7GitHub: §fhttps://github.com/8aka-Team/Invero")
         console().sendMessage(" ")
     }
 
