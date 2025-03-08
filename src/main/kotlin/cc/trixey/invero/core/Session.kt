@@ -5,7 +5,7 @@ import cc.trixey.invero.common.Menu
 import cc.trixey.invero.common.TaskGroup
 import cc.trixey.invero.core.Session.Companion.VarType.*
 import cc.trixey.invero.core.util.session
-import cc.trixey.invero.core.util.translateFormattedMessage
+import cc.trixey.invero.common.message.translateFormattedMessage
 import cc.trixey.invero.ui.bukkit.BukkitWindow
 import cc.trixey.invero.ui.bukkit.PlayerViewer
 import org.bukkit.entity.Player

@@ -54,7 +54,7 @@ class PanelGenerator(
     override val scale = _scale ?: layout?.getScale() ?: Scale(9 to -1)
 
     override fun invoke(parent: PanelContainer, session: Session) =
-        parent.generatorPaged(scale.pair, parent.locate()) {
+        parent.generatorPaged<Any>(scale.pair, parent.locate()) {
             skipRender = true
             // 生成默认图标
             val def = icons.map { (_, icon) ->
@@ -67,7 +67,7 @@ class PanelGenerator(
             }
             // 应用元素
             generatorSource {
-                genearte(session)
+                generate(session)
             }
             // 生成输出
             generatorOutput {
@@ -104,7 +104,7 @@ class PanelGenerator(
         }
     }
 
-    private fun genearte(session: Session): List<Object> {
+    private fun generate(session: Session): List<Object> {
         val created = settings.create().apply {
             generate(Context(session))
             if (settings.extenedObjects != null) {

@@ -1,5 +1,6 @@
 package cc.trixey.invero.ui.bukkit
 
+import cc.trixey.invero.common.message.parseAsJson
 import cc.trixey.invero.ui.bukkit.nms.handler
 import cc.trixey.invero.ui.bukkit.nms.persistContainerId
 import cc.trixey.invero.ui.common.event.ClickType
@@ -88,8 +89,10 @@ class InventoryPacket(override val window: BukkitWindow) : ProxyBukkitInventory 
 
         closed = false
         updatePlayerItems()
-        val replaced = runCatching { FontImageWrapper.replaceFontImages(viewer, inventoryTitle) }.getOrNull() ?: inventoryTitle
-        handler.sendWindowOpen(viewer, persistContainerId, containerType, replaced)
+        val replaced =
+            runCatching { FontImageWrapper.replaceFontImages(viewer, inventoryTitle) }.getOrNull() ?: inventoryTitle
+        val json = replaced.parseAsJson()
+        handler.sendWindowOpen(viewer, persistContainerId, containerType, json)
         update()
 
         // temp

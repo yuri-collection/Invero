@@ -1,18 +1,21 @@
 import io.izzel.taboolib.gradle.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.serialization") version "1.9.22"
-    id("io.izzel.taboolib") version "2.0.20"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.serialization") version "2.1.0"
+    id("io.izzel.taboolib") version "2.0.22"
 }
 
 taboolib {
-    relocate("kotlinx.serialization", "kotlinx163.serialization")
-    relocate("org.slf4j", "cc.trixey.invero.libs.slf4j")
+
+    version { taboolib = "6.2.3" }
 
     env {
+        // 镜像中央仓库
+        repoCentral = "https://repo.huaweicloud.com/repository/maven/"
         // 安装模块
         install(
             Basic,
@@ -29,7 +32,26 @@ taboolib {
         )
         install("platform-bukkit-impl")
     }
-    version { taboolib = "6.2.3" }
+
+    description {
+        name(rootProject.name)
+
+        desc("灵活强大的多功能容器 GUI 解决方案")
+
+        contributors {
+            name("Arasple")
+            name("TheFloodDragon")
+        }
+
+        links {
+            name("homepage").url("https://invero.8aka.org/")
+        }
+
+    }
+
+    // 重定向
+    relocate("kotlinx.serialization.", "kotlinx.serialization180.")
+    relocate("org.slf4j", "cc.trixey.invero.libs.slf4j")
 }
 
 repositories {
@@ -41,40 +63,61 @@ repositories {
 }
 
 dependencies {
-    compileOnly("ink.ptms.core:v12104:12104:mapped")
-    compileOnly("ink.ptms.core:v12104:12104:universal")
+    compileOnly(kotlin("stdlib"))
+    // Kotlin 序列化
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.0")
+
+    // Adventure API
+    compileOnly("net.kyori:adventure-api:4.19.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
+    compileOnly("net.kyori:adventure-text-serializer-gson:4.19.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.19.0")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
+
+    // Minecraft Core
+    compileOnly("ink.ptms.core:v12101:12101:mapped")
+    compileOnly("ink.ptms.core:v12101:12101:universal")
     compileOnly("ink.ptms:nms-all:1.0.0")
 
     compileOnly("io.netty:netty-all:4.1.106.Final")
     compileOnly("com.google.code.gson:gson:2.8.9")
     compileOnly("com.google.guava:guava:32.0.0-android")
     compileOnly("com.mojang:brigadier:1.0.18")
+    compileOnly("com.mojang:authlib:5.0.51")
 
     // 添加 SLF4J 依赖
     taboo("org.slf4j:slf4j-api:1.7.36")
     taboo("org.slf4j:slf4j-simple:1.7.36")
 
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3")
-    compileOnly("net.kyori:adventure-api:4.15.0")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
-    compileOnly("net.kyori:adventure-text-minimessage:4.12.0")
+    // Compatible Plugins
     compileOnly("ink.ptms.adyeshach:all:2.0.0-snapshot-36")
     compileOnly("org.black_ixx:playerpoints:3.1.1")
-    compileOnly("io.th0rgal:oraxen:1.170.0")
+    compileOnly("io.th0rgal:oraxen:1.189.0")
     compileOnly("ink.ptms:Zaphkiel:2.0.14")
+    compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
+    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.3-beta-14")
 
-    compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
+// 资源处理
+tasks.processResources {
+    filesMatching("**/*.json") {
+        expand(
+            "serialization" to "1.8.0",
+            "adventureApi" to "4.19.0",
+            "adventurePlatform" to "4.3.4",
+            "kr" to "210", // Kotlin Version Escaped
+            "krx" to "180", // Kotlin Serialization Version Escaped 
+        )
+    }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "17"
+// Kotlin 构建设置
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
             "-Xextended-compiler-checks",
@@ -84,7 +127,13 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+// Java 构建设置
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// 编码设置
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }

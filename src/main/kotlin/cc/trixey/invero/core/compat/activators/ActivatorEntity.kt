@@ -28,7 +28,7 @@ class ActivatorEntity(private val types: List<String> = emptyList()) : MenuActiv
         @SubscribeEvent(ignoreCancelled = true)
         fun e(e: PlayerInteractEntityEvent) {
             // 避免高版本此事件触发两次
-            if (MinecraftVersion.majorLegacy >= 10900 && e.hand == EquipmentSlot.OFF_HAND) return
+            if (MinecraftVersion.versionId >= 10900 && e.hand == EquipmentSlot.OFF_HAND) return
 
             Invero.API.getRegistry().callActivator(e.player, "ENTITY", e.rightClicked)
         }

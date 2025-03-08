@@ -23,7 +23,7 @@ import kotlin.jvm.optionals.getOrElse
  * @author Arasple
  * @since 2023/1/16 10:32
  */
-@Serializable
+@Serializable(TextureMaterial.Companion::class)
 class TextureMaterial(override val raw: String) : Texture() {
 
     @Transient
@@ -44,7 +44,7 @@ class TextureMaterial(override val raw: String) : Texture() {
                 val id = it.groupValues[1].toIntOrNull() ?: 1
                 val data = it.groupValues.getOrNull(2)?.toByteOrNull() ?: 0
 
-                return if (MinecraftVersion.majorLegacy < 11300)
+                return if (MinecraftVersion.versionId < 11300)
                     Material::class.java.invokeMethod<Material>(
                         "getMaterial",
                         id,
@@ -79,6 +79,6 @@ class TextureMaterial(override val raw: String) : Texture() {
 
     }
 
-    override fun clone() = TextureMaterial( raw)
+    override fun clone() = TextureMaterial(raw)
 
 }
