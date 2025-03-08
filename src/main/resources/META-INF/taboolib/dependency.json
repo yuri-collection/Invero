@@ -1,6 +1,6 @@
 [
   {
-    "value": "org.jetbrains.kotlinx:kotlinx-serialization-core:$serialization",
+    "value": "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:$serialization",
     "transitive": false,
     "ignoreOptional": true,
     "ignoreException": false,
@@ -11,13 +11,13 @@
     "relocate": [
       "kotlin.",
       "kotlin${kr}.",
-      "kotlinx.",
-      "kotlinx.${krx}.",
+      "kotlinx.serialization.",
+      "kotlinx.serialization${krx}.",
     ],
     "external": true
   },
   {
-    "value": "org.jetbrains.kotlinx:kotlinx-serialization-json:$serialization",
+    "value": "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:$serialization",
     "transitive": false,
     "ignoreOptional": true,
     "ignoreException": false,
@@ -28,8 +28,8 @@
     "relocate": [
       "kotlin.",
       "kotlin${kr}.",
-      "kotlinx.",
-      "kotlinx${krx}.",
+      "kotlinx.serialization.",
+      "kotlinx.serialization${krx}.",
     ],
     "external": true
   },

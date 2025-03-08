@@ -50,7 +50,7 @@ taboolib {
     }
 
     // 重定向
-    relocate("kotlinx.", "kotlinx180.")
+    relocate("kotlinx.serialization.", "kotlinx.serialization180.")
 }
 
 repositories {
