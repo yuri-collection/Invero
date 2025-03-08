@@ -1,15 +1,15 @@
 import io.izzel.taboolib.gradle.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.serialization") version "1.9.22"
-    id("io.izzel.taboolib") version "2.0.18"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.serialization") version "2.1.0"
+    id("io.izzel.taboolib") version "2.0.22"
 }
 
 taboolib {
-    relocate("kotlinx.serialization", "kotlinx163.serialization")
 
     env {
         // 安装模块
@@ -28,7 +28,11 @@ taboolib {
         )
         install("platform-bukkit-impl")
     }
-    version { taboolib = "6.2.0-beta15" }
+
+    version { taboolib = "6.2.3" }
+
+    // 重定向
+    relocate("kotlinx.serialization", "kotlinx180.serialization")
 }
 
 repositories {
@@ -36,6 +40,7 @@ repositories {
     mavenCentral()
     maven("https://jitpack.io")
     maven("https://repo.rosewooddev.io/repository/public/")
+    maven("https://repo.oraxen.com/releases")
 }
 
 dependencies {
@@ -48,14 +53,16 @@ dependencies {
     compileOnly("com.google.guava:guava:32.0.0-android")
     compileOnly("com.mojang:brigadier:1.0.18")
 
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3")
-    compileOnly("net.kyori:adventure-api:4.15.0")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.2")
-    compileOnly("net.kyori:adventure-text-minimessage:4.12.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.0")
+    compileOnly("net.kyori:adventure-api:4.19.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
+    compileOnly("net.kyori:adventure-text-serializer-gson:4.19.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.19.0")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
     compileOnly("ink.ptms.adyeshach:all:2.0.0-snapshot-36")
     compileOnly("org.black_ixx:playerpoints:3.1.1")
-    compileOnly("com.github.oraxen:oraxen:1.170.0")
+    compileOnly("io.th0rgal:oraxen:1.189.0")
     compileOnly("ink.ptms:Zaphkiel:2.0.14")
 
 
@@ -63,13 +70,23 @@ dependencies {
     compileOnly(fileTree("libs"))
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
+// 资源处理
+tasks.processResources {
+    filesMatching("**/*.json") {
+        expand(
+            "serialization" to "1.8.0",
+            "adventureApi" to "4.19.0",
+            "adventurePlatform" to "4.3.4",
+            "kr" to "210", // Kotlin Version Escaped
+            "krx" to "180", // Kotlin Serialization Version Escaped 
+        )
+    }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "1.8"
+// Kotlin 构建设置
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
         freeCompilerArgs = listOf(
             "-Xjvm-default=all",
             "-Xextended-compiler-checks",
@@ -79,7 +96,14 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-configure<JavaPluginConvention> {
+// Java 构建设置
+java {
+    withSourcesJar()
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// 编码设置
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }

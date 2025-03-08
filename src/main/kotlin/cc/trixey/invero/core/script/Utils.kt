@@ -4,7 +4,7 @@ import cc.trixey.invero.common.Object
 import cc.trixey.invero.core.Session
 import cc.trixey.invero.core.icon.IconElement
 import cc.trixey.invero.core.util.session
-import cc.trixey.invero.core.util.translateFormattedMessage
+import cc.trixey.invero.common.message.translateFormattedMessage
 import cc.trixey.invero.ui.bukkit.PanelContainer
 import cc.trixey.invero.ui.common.Panel
 import cc.trixey.invero.ui.common.panel.ElementalPanel

@@ -4,7 +4,7 @@ import cc.trixey.invero.core.Context
 import cc.trixey.invero.core.compat.bungeecord.Bungees
 import cc.trixey.invero.core.compat.eco.HookPlayerPoints
 import cc.trixey.invero.core.script.loader.InveroKetherParser
-import cc.trixey.invero.core.util.translateFormattedMessage
+import cc.trixey.invero.common.message.translateFormattedMessage
 import org.bukkit.entity.Player
 import taboolib.common5.cdouble
 import taboolib.common5.cint

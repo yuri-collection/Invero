@@ -11,7 +11,7 @@ import taboolib.library.reflex.Reflex.Companion.getProperty
 import taboolib.library.reflex.Reflex.Companion.setProperty
 import taboolib.library.reflex.Reflex.Companion.unsafeInstance
 import taboolib.module.nms.MinecraftVersion.isUniversal
-import taboolib.module.nms.MinecraftVersion.majorLegacy
+import taboolib.module.nms.MinecraftVersion.versionId
 import taboolib.module.nms.MinecraftVersion.versionId
 import taboolib.module.nms.sendBundlePacketBlocking
 import taboolib.module.nms.sendPacketBlocking
@@ -38,13 +38,13 @@ class NMSImpl : NMS {
                 player.postPacket(
                     instance,
                     "containerId" to containerId,
-                    if (majorLegacy < 11900) "type" to type.serialId
+                    if (versionId < 11900) "type" to type.serialId
                     else "type" to Containers::class.java.getProperty<Containers<*>>(type.vanillaId, true),
                     "title" to title
                 )
             }
 
-            majorLegacy >= 11400 -> {
+            versionId >= 11400 -> {
                 player.postPacket(
                     instance,
                     "a" to containerId,
@@ -69,15 +69,15 @@ class NMSImpl : NMS {
         player.postPacket(PacketPlayOutCloseWindow(containerId))
     }
 
-    private val fieldContainerID = if (majorLegacy >= 11700) "containerId" else "a"
-    private val fieldItems = if (majorLegacy >= 11700) "items" else "b"
+    private val fieldContainerID = if (versionId >= 11700) "containerId" else "a"
+    private val fieldItems = if (versionId >= 11700) "items" else "b"
 
     override fun sendWindowItems(player: Player, containerId: Int, itemStacks: List<ItemStack?>) {
         val instance = PacketPlayOutWindowItems::class.java.unsafeInstance()
         val items = itemStacks.asNMSCopy()
 
         when {
-            majorLegacy >= 11701 -> {
+            versionId >= 11701 -> {
                 player.postPacket(
                     instance,
                     "containerId" to containerId,
@@ -88,7 +88,7 @@ class NMSImpl : NMS {
             }
 
             else -> {
-                val valueItems: Any = if (majorLegacy >= 11000) items else items.toTypedArray()
+                val valueItems: Any = if (versionId >= 11000) items else items.toTypedArray()
 
                 player.postPacket(
                     instance,
@@ -101,7 +101,7 @@ class NMSImpl : NMS {
 
     override fun sendWindowSetSlot(player: Player, containerId: Int, slot: Int, itemStack: ItemStack?, stateId: Int) {
         when {
-            majorLegacy >= 11701 -> {
+            versionId >= 11701 -> {
                 player.postPacket(
                     PacketPlayOutSetSlot::class.java.unsafeInstance(),
                     "containerId" to containerId,

@@ -35,7 +35,7 @@ class ActivatorItem(private val inferItem: InferItem, private val raw: JsonEleme
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun e(e: PlayerInteractEvent) {
-            if (MinecraftVersion.majorLegacy >= 10900 && e.isOffhand()) return
+            if (MinecraftVersion.versionId >= 10900 && e.isOffhand()) return
             if (e.player.session != null) return
             val item = e.item ?: return
 

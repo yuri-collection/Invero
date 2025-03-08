@@ -18,7 +18,7 @@ import taboolib.common5.cint
  *
 
  */
-@Serializable
+@Serializable(Slot.Companion::class)
 data class Slot(private val raw: String) {
 
     @Transient

@@ -191,7 +191,6 @@ class DefaultMenuManager : InveroMenuManager {
     private fun registerListener(file: File, menu: BaseMenu) {
         val menuId = menu.id!!
 
-        if (FileWatcher.INSTANCE.hasListener(file)) return
         FileWatcher.INSTANCE.addSimpleListener(file) {
             submitAsync {
                 if (!file.exists() || !menus.containsKey(menuId)) {

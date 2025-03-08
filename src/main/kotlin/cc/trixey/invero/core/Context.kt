@@ -1,7 +1,7 @@
 package cc.trixey.invero.core
 
 import cc.trixey.invero.core.icon.IconElement
-import cc.trixey.invero.core.util.translateFormattedMessage
+import cc.trixey.invero.common.message.translateFormattedMessage
 import cc.trixey.invero.ui.bukkit.PlayerViewer
 import cc.trixey.invero.ui.common.Panel
 import org.bukkit.entity.Player

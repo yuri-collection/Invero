@@ -1,19 +1,4 @@
 @file:OptIn(ExperimentalSerializationApi::class)
-@file:RuntimeDependencies(
-    RuntimeDependency(
-        value = "!org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3",
-        test = "!kotlinx163.serialization.Serializer",
-        relocate = ["!kotlin.", "!kotlin1922.", "!kotlinx.", "!kotlinx163."],
-        transitive = false
-    ),
-    RuntimeDependency(
-        value = "!org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3",
-        test = "!kotlinx163.serialization.json.JsonKt",
-        relocate = ["!kotlin.", "!kotlin1922.", "!kotlinx.", "!kotlinx163."],
-        transitive = false
-    )
-)
-
 package cc.trixey.invero.core.serialize
 
 import cc.trixey.invero.common.util.standardJson

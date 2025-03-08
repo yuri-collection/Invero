@@ -16,7 +16,7 @@ import cc.trixey.invero.core.panel.PanelCrafting
 import cc.trixey.invero.core.serialize.ListAgentPanelSerializer
 import cc.trixey.invero.core.serialize.NodeSerializer
 import cc.trixey.invero.core.util.session
-import cc.trixey.invero.core.util.translateFormattedMessage
+import cc.trixey.invero.common.message.translateFormattedMessage
 import cc.trixey.invero.core.util.unregisterSession
 import cc.trixey.invero.ui.bukkit.InventoryPacket
 import cc.trixey.invero.ui.bukkit.InventoryVanilla
@@ -31,7 +31,6 @@ import kotlinx.serialization.json.JsonNames
 import kotlinx.serialization.json.JsonObject
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.submitAsync
-import taboolib.common.platform.function.warning
 import taboolib.library.reflex.Reflex.Companion.setProperty
 import taboolib.platform.util.giveItem
 import taboolib.platform.util.removeMeta

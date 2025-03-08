@@ -12,7 +12,7 @@ import taboolib.platform.util.*
 
 fun ItemStack.isUIMarked(): Boolean {
     var isMarked = false
-    if (MinecraftVersion.majorLegacy > 11400) {
+    if (MinecraftVersion.versionId > 11400) {
         modifyMeta<ItemMeta> {
             isMarked = persistentDataContainer.get("invero_icon".asNamespacedKey, PersistentDataType.STRING) != null
         }
@@ -27,7 +27,7 @@ fun ItemStack.copyUIMarked(viewer: String, slot: Int): ItemStack {
     val mark = "$viewer:$slot"
     val modified = clone()
 
-    return if (MinecraftVersion.majorLegacy > 11400) {
+    return if (MinecraftVersion.versionId > 11400) {
         modified.modifyMeta<ItemMeta> {
             persistentDataContainer.set("invero_icon".asNamespacedKey, PersistentDataType.STRING, mark)
         }

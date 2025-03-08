@@ -1,5 +1,7 @@
-package cc.trixey.invero.core.util
+package cc.trixey.invero.common.message
 
+import cc.trixey.invero.core.util.KetherHandler
+import cc.trixey.invero.core.util.replaceBitmapBlank
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.adaptPlayer
 import taboolib.module.chat.HexColor
@@ -30,8 +32,7 @@ fun String.translateFormattedMessage(
     variables: Map<String, Any?> = emptyMap(),
     skipComp: Boolean = false
 ) =
-    KetherHandler
-        .parseInline(replace("§", "[[COLOR_CHAR]]"), player, variables)
+    KetherHandler.parseInline(replace("§", "[[COLOR_CHAR]]"), player, variables)
         .replacePlaceholder(player)
         .replace("§", "[[COLOR_CHAR]]")
 //        .parseMiniMessage()
@@ -51,8 +52,7 @@ fun String.translateFormattedMessage(
  * - MiniMessage Component Send (if supported) (else send noraml message)
  */
 fun String.sendFormattedMiniMessageComponent(player: Player, variables: Map<String, Any> = emptyMap()) =
-    KetherHandler
-        .parseInline(this, player, variables)
+    KetherHandler.parseInline(this, player, variables)
         .replacePlaceholder(player)
         .colored()
 //        .parseMiniMessageAndSend(player)
@@ -65,8 +65,7 @@ fun String.sendFormattedMiniMessageComponent(player: Player, variables: Map<Stri
  * - TabooLib Component (with colored)
  */
 fun String.sendFormattedTabooComponent(player: Player, variables: Map<String, Any> = emptyMap()) =
-    KetherHandler
-        .parseInline(this, player, variables)
+    KetherHandler.parseInline(this, player, variables)
         .replacePlaceholder(player)
         .colored()
         .component()
@@ -84,4 +83,4 @@ fun String.colored() =
             }
         }
 
-private val patchDragonCore: Boolean = MinecraftVersion.majorLegacy in 11903 until 11300
+private val patchDragonCore: Boolean = MinecraftVersion.versionId in 11903 downTo 11300
