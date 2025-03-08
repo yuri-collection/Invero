@@ -104,7 +104,7 @@ tasks.processResources {
             "adventureApi" to "4.19.0",
             "adventurePlatform" to "4.3.4",
             "kr" to "210", // Kotlin Version Escaped
-            "krx" to "180", // Kotlin Serialization Version Escaped 
+            "krx" to "180", // Kotlin Serialization Version Escaped
         )
     }
 }

@@ -125,7 +125,8 @@ class InventoryVanilla(override val window: BukkitWindow) : ProxyBukkitInventory
 
     override fun isViewing(): Boolean {
         val viewer = window.viewer.get<Player>()
-        return viewer != null && viewer.isOnline && viewer.openInventory.topInventory == container
+        // 使用NMS方式替代直接比较inventory，避免版本兼容性问题
+        return viewer != null && viewer.isOnline && handler.getActiveContainerId(viewer) == containerId && containerId != -1
     }
 
     override fun open() {
