@@ -3,7 +3,6 @@ package cc.trixey.invero.ui.bukkit.nms
 import cc.trixey.invero.common.message.Message
 import cc.trixey.invero.common.message.toMinecraft
 import cc.trixey.invero.ui.common.ContainerType
-import net.kyori.adventure.text.Component
 import net.minecraft.server.v1_16_R3.*
 import net.minecraft.world.inventory.Containers
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer

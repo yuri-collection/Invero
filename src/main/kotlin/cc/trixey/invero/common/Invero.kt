@@ -1,6 +1,8 @@
 package cc.trixey.invero.common
 
 import cc.trixey.invero.common.api.InveroAPI
+import cc.trixey.invero.common.message.Message
+import cc.trixey.invero.common.message.toMinecraft
 import taboolib.common.event.InternalEventBus
 import taboolib.common.platform.PlatformFactory
 import taboolib.common.platform.Plugin
@@ -66,7 +68,7 @@ object Invero : Plugin() {
                 }
                 val plain = InventoryHandler.instance.craftChatMessageToPlain(e.packet.read(field)!!)
                 if (plain.startsWith('{') && plain.endsWith('}')) {
-                    e.packet.write(field, InventoryHandler.instance.parseToCraftChatMessage(plain))
+                    e.packet.write(field, Message.transformFromJson(plain).toMinecraft())
                 }
             }
         }
