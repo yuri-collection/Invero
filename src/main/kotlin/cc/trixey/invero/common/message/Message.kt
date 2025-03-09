@@ -50,13 +50,13 @@ object Message {
             .let { miniBuilder.deserialize(deMark(it)) }
 
     /**
-     * 将 Json字符串 转换成 [Component]
+     * 将 [Component] 转换成 Json字符串
      */
     @JvmStatic
     fun transformToJson(component: Component): String = gsonBuilder.serialize(component)
 
     /**
-     * 将 [Component] 转换成 Json字符串
+     * 将 Json字符串 转换成 [Component]
      */
     @JvmStatic
     fun transformFromJson(json: String): Component = gsonBuilder.deserialize(json)

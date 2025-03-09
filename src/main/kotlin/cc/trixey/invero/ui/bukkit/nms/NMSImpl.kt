@@ -1,6 +1,9 @@
 package cc.trixey.invero.ui.bukkit.nms
 
+import cc.trixey.invero.common.message.Message
+import cc.trixey.invero.common.message.toMinecraft
 import cc.trixey.invero.ui.common.ContainerType
+import net.kyori.adventure.text.Component
 import net.minecraft.server.v1_16_R3.*
 import net.minecraft.world.inventory.Containers
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer
@@ -30,7 +33,7 @@ class NMSImpl : NMS {
     private val itemAir = null.asNMSCopy()
 
     override fun sendWindowOpen(player: Player, containerId: Int, type: ContainerType, rawTitle: String) {
-        val title = InventoryHandler.instance.parseToCraftChatMessage(rawTitle)
+        val title = Message.parseAdventure(rawTitle).toMinecraft()
         val instance = PacketPlayOutOpenWindow::class.java.unsafeInstance()
 
         when {
