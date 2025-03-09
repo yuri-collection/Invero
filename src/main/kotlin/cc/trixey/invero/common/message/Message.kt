@@ -10,9 +10,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.AMPE
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.SECTION_CHAR
 import taboolib.module.nms.MinecraftVersion
 
-// TODO Implement Writing components to displayName and lores
-fun String.parseAsJson(): String = this
-
 /**
  * Message
  *
@@ -23,14 +20,15 @@ object Message {
 
     @JvmStatic
     val gsonBuilder by lazy {
-        if (isLegacy) GsonComponentSerializer.colorDownsamplingGson()
-        else GsonComponentSerializer.gson()
+        if (MinecraftVersion.isLower(MinecraftVersion.V1_16)) {
+            GsonComponentSerializer.colorDownsamplingGson()
+        } else GsonComponentSerializer.gson()
     }
 
     @JvmStatic
     val legacyBuilder by lazy {
         LegacyComponentSerializer.builder().also {
-            if (!isLegacy) {
+            if (MinecraftVersion.isHigherOrEqual(MinecraftVersion.V1_16)) {
                 it.hexColors()
                 it.useUnusualXRepeatedCharacterHexFormat()
             }
@@ -43,13 +41,13 @@ object Message {
     }
 
     /**
-     * Parse to [Component] and transform to Json
+     * 冒险API消息解析
      */
     @JvmStatic
-    fun parseAsJson(target: String): String {
-        val parsed = parseAdventure(target)
-        return transformToJson(parsed)
-    }
+    fun parseAdventure(source: String): Component =
+        legacyBuilder.deserialize(translateAmpersandColor(mark(source)))
+            .let { miniBuilder.serialize(it) }
+            .let { miniBuilder.deserialize(deMark(it)) }
 
     /**
      * 将 Json字符串 转换成 [Component]
@@ -75,15 +73,6 @@ object Message {
     @JvmStatic
     fun translateLegacyColor(target: String) = target.replace(SECTION_CHAR, AMPERSAND_CHAR)
 
-    /**
-     * 冒险API消息解析
-     */
-    @JvmStatic
-    fun parseAdventure(source: String): Component =
-        legacyBuilder.deserialize(translateAmpersandColor(mark(source)))
-            .let { miniBuilder.serialize(it) }
-            .let { miniBuilder.deserialize(deMark(it)) }
-
     @JvmStatic
     private fun mark(source: String) =
         source.replaceNonEscaped(TAG_START, MARKED_TAG_START).replaceNonEscaped(TAG_END, MARKED_TAG_END)
@@ -92,16 +81,13 @@ object Message {
     private fun deMark(source: String) =
         source.replaceNonEscaped(MARKED_TAG_START, TAG_START).replaceNonEscaped(MARKED_TAG_END, TAG_END)
 
-    const val MARKED_TAG_START = "{marked:start}"
-    const val MARKED_TAG_END = "{marked:end}"
+    private const val MARKED_TAG_START = "{marked:start}"
+    private const val MARKED_TAG_END = "{marked:end}"
 
     @Suppress("UnstableApiUsage")
-    const val TAG_START = TokenParser.TAG_START.toString()
+    private const val TAG_START = TokenParser.TAG_START.toString()
 
     @Suppress("UnstableApiUsage")
-    const val TAG_END = TokenParser.TAG_END.toString()
-
-    @JvmStatic
-    private val isLegacy = MinecraftVersion.isLower(MinecraftVersion.V1_16)
+    private const val TAG_END = TokenParser.TAG_END.toString()
 
 }

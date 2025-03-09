@@ -1,6 +1,7 @@
 package cc.trixey.invero.core.item
 
-import cc.trixey.invero.common.message.parseAsJson
+import cc.trixey.invero.common.message.writeDisplayName
+import cc.trixey.invero.common.message.writeLore
 import cc.trixey.invero.core.Context
 import cc.trixey.invero.core.icon.IconElement
 import cc.trixey.invero.core.util.flatRelease
@@ -63,11 +64,11 @@ private fun ItemStack.generateProperties(
     return modifyMeta<ItemMeta> {
         // 显示名称
         frameBy { name }?.let {
-            setDisplayName(context.parse(it).prefixColored.parseAsJson())
+            writeDisplayName(context.parse(it).prefixColored)
         }
         // 显示描述
         frameBy { lore }?.let {
-            lore = context.parse(it).loreColored(frame.enhancedLore)
+            writeLore(context.parse(it).loreColored(frame.enhancedLore))
         }
         // [属性] 数量
         frameBy { amount }?.let {
@@ -134,14 +135,14 @@ private val String.prefixColored: String
 
 private fun List<String>.loreColored(enhancedProcess: Boolean?): List<String> {
     return if (enhancedProcess != true) {
-        map { it.prefixColored.parseAsJson() }
+        map { it.prefixColored }
     } else {
         val iterator = iterator()
 
         buildList {
             while (iterator.hasNext()) {
                 val it = iterator.next()
-                this += it.split("\\n").map { it.prefixColored.parseAsJson() }
+                this += it.split("\\n").map { it.prefixColored }
             }
         }
     }

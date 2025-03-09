@@ -1,12 +1,11 @@
 package cc.trixey.invero.ui.bukkit
 
-import cc.trixey.invero.common.message.parseAsJson
+import cc.trixey.invero.common.message.createInventoryPaper
 import cc.trixey.invero.ui.bukkit.api.isRegistered
 import cc.trixey.invero.ui.bukkit.nms.handler
 import cc.trixey.invero.ui.bukkit.panel.CraftingPanel
 import cc.trixey.invero.ui.bukkit.util.clickType
 import cc.trixey.invero.ui.bukkit.util.synced
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.*
 import org.bukkit.inventory.Inventory
@@ -23,16 +22,16 @@ import taboolib.common.platform.function.submitAsync
  */
 class InventoryVanilla(override val window: BukkitWindow) : ProxyBukkitInventory {
 
-    val container = if (containerType.isOrdinaryChest)
-        Bukkit.createInventory(Holder(window), containerType.containerSize, inventoryTitle.parseAsJson())
-    else try {
-        Bukkit.createInventory(
-            Holder(window),
-            InventoryType.valueOf(containerType.bukkitType),
-            inventoryTitle.parseAsJson()
-        )
-    } catch (e: Throwable) {
-        error("Not supported inventory type (${containerType.bukkitType}) yet")
+    val container: Inventory = createContainer()
+
+    private fun createContainer(): Inventory {
+        return if (containerType.isOrdinaryChest)
+            createInventoryPaper(Holder(window), containerType.containerSize, inventoryTitle)
+        else try {
+            createInventoryPaper(Holder(window), InventoryType.valueOf(containerType.bukkitType), inventoryTitle)
+        } catch (e: Throwable) {
+            error("Not supported inventory type (${containerType.bukkitType}) yet")
+        }
     }
 
     override val hidePlayerInventory: Boolean by lazy { window.hidePlayerInventory }
