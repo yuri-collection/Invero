@@ -59,4 +59,15 @@ object InveroSettings {
     var autoPlaceholderTranslate = true
         private set
 
+    /**
+     * 允许在 Vanilla Inventory 中使用 Raw Title
+     */
+    @ConfigNode("Patch.enable-raw-title-in-vanilla-inventory")
+    var enableRawTitleInVanillaInventory = false
+        private set(value) {
+            field = value
+            // Enable raw title in vanilla inventory if configured
+            if (value) taboolib.module.ui.enableRawTitleInVanillaInventory()
+        }
+
 }

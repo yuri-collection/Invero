@@ -2,6 +2,7 @@ package cc.trixey.invero.common.message
 
 import cc.trixey.invero.common.util.replaceNonEscaped
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.internal.parser.TokenParser
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
@@ -44,10 +45,15 @@ object Message {
      * 冒险API消息解析
      */
     @JvmStatic
-    fun parseAdventure(source: String): Component =
-        legacyBuilder.deserialize(translateAmpersandColor(mark(source)))
+    fun parseAdventure(source: String): Component {
+        val parsed = legacyBuilder.deserialize(translateAmpersandColor(mark(source)))
             .let { miniBuilder.serialize(it) }
             .let { miniBuilder.deserialize(deMark(it)) }
+        // https://github.com/KyoriPowered/adventure/issues/534
+        return if (!parsed.hasDecoration(TextDecoration.ITALIC)) {
+            parsed.decoration(TextDecoration.ITALIC, false);
+        } else parsed
+    }
 
     /**
      * 将 [Component] 转换成 Json字符串

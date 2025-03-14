@@ -6,6 +6,7 @@ import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.platform.function.console
 import taboolib.module.kether.KetherFunction
 import taboolib.module.kether.KetherShell
+import taboolib.module.kether.ScriptOptions
 import taboolib.module.kether.runKether
 import java.util.concurrent.CompletableFuture
 
@@ -24,9 +25,11 @@ object KetherHandler {
         runKether {
             KetherShell.eval(
                 source,
-                sender = if (player != null) adaptPlayer(player) else console(),
-                namespace = namespace,
-                vars = KetherShell.VariableMap(vars)
+                ScriptOptions.new {
+                    namespace(namespace)
+                    sender(if (player != null) adaptPlayer(player) else console())
+                    vars(vars)
+                }
             )
         }
     } ?: CompletableFuture.completedFuture(null)
@@ -34,9 +37,11 @@ object KetherHandler {
     fun parseInline(source: String, player: Player?, vars: Map<String, Any?>) = alert {
         KetherFunction.parse(
             source,
-            sender = if (player != null) adaptPlayer(player) else console(),
-            namespace = namespace,
-            vars = KetherShell.VariableMap(vars)
+            ScriptOptions.new {
+                namespace(namespace)
+                sender(if (player != null) adaptPlayer(player) else console())
+                vars(vars)
+            }
         )
     } ?: "<ERROR: $source>"
 

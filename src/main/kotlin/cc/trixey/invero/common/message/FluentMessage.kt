@@ -32,16 +32,17 @@ fun String.translateFormattedMessage(
     variables: Map<String, Any?> = emptyMap(),
     skipComp: Boolean = false
 ) =
-    KetherHandler.parseInline(replace("§", "[[COLOR_CHAR]]"), player, variables)
+    KetherHandler.parseInline(replace("§", COLOR_CHAR), player, variables)
         .replacePlaceholder(player)
-        .replace("§", "[[COLOR_CHAR]]")
-//        .parseMiniMessage()
+        .replace("§", COLOR_CHAR)
         .colored()
-        .replace("[[COLOR_CHAR]]", "§")
+        .replace(COLOR_CHAR, "§")
         .replaceBitmapBlank()
         .let {
             if (skipComp) it else it.component().build().toLegacyText()
         }
+
+private const val COLOR_CHAR = "[[COLOR_CHAR]]"
 
 /**
  * （默认）发送格式化消息
