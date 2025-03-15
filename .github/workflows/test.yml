@@ -24,3 +24,8 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew clean build
+      - name: Upload
+        uses: actions/upload-artifact@main
+        with:
+          name: build
+          path: build/libs/Invero-*.jar
