@@ -1,0 +1,31 @@
+name: Plugin Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    if: contains(github.event.head_commit.message, '[skip]') == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: adopt
+          java-version: 21
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./gradlew
+      - name: Build
+        run: ./gradlew clean build
+      - name: Capture Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Artifacts
+          path: build/libs/Invero-*.jar
