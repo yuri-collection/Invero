@@ -253,11 +253,11 @@ class DefaultMenuManager : InveroMenuManager {
 
             for (path in InveroSettings.workspaces) {
                 val file = File(path)
-                if (file.isDirectory) {
-                    // release defaults if not exist
-                    if (!file.exists()) releaseWorkspace(file)
-                    list.add(file)
+                // release defaults if not exist
+                if (!file.exists()) { 
+                    releaseWorkspace(file)
                 }
+                if (file.isDirectory) list.add(file)
             }
 
             return list
