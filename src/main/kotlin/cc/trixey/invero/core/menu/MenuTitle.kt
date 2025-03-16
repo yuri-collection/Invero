@@ -24,7 +24,7 @@ class MenuTitle(
     @JsonNames("mode")
     val type: CycleMode?,
     val period: Long?,
-    val frames: List<Frame>,
+    val frames: List<Frame> = emptyList(),
     @SerialName("pre-generate")
     val preGenerate: Boolean?
 ) {
