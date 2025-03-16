@@ -28,9 +28,7 @@ fun actionTell() = combinationParser {
             val context = contextVar<Context?>("@context")?.variables ?: variables().toMap()
             val player = player()
 
-            message
-                .translateFormattedMessage(player, context)
-                .let { s -> player.sendMessage(s) }
+            message.sendFormattedMiniMessageComponent(player, context)
         }
     }
 }
