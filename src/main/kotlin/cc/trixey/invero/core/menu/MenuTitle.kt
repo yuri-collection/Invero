@@ -2,7 +2,6 @@
 
 package cc.trixey.invero.core.menu
 
-import cc.trixey.invero.common.message.Message
 import cc.trixey.invero.core.Session
 import cc.trixey.invero.core.animation.CycleMode
 import cc.trixey.invero.core.animation.toCyclic
@@ -12,7 +11,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonNames
-import taboolib.module.chat.component
 
 /**
  * Invero
@@ -33,16 +31,11 @@ class MenuTitle(
 
     @Serializable
     class Frame(
-        @JsonNames("title", "value")
-        val valuex: String,
+        @JsonNames("title")
+        val value: String,
         @JsonNames("delay")
         val last: Long?
-    ) {
-
-        @Transient
-        val value = Message.translateAmpersandColor(valuex)
-
-    }
+    )
 
     @Transient
     val isStatic = frames.size <= 1

@@ -4,7 +4,6 @@ import taboolib.library.configuration.ConfigurationSection
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.ConfigNode
 import taboolib.module.configuration.Configuration
-import taboolib.platform.util.bukkitPlugin
 
 /**
  * Invero
@@ -18,11 +17,6 @@ object InveroSettings {
     @Config
     lateinit var conf: Configuration
         private set
-
-    /**
-     * 插件根目录
-     */
-    val pluginFolder by lazy { bukkitPlugin.dataFolder }
 
     /**
      * 工作路径
@@ -60,9 +54,17 @@ object InveroSettings {
         private set
 
     /**
+     * 是否默认使用虚拟菜单
+     */
+    @ConfigNode("Menu.virtual-by-default")
+    var virtualByDefault = false
+        private set
+
+    /**
      * 允许在 Vanilla Inventory 中使用 Raw Title
      */
-    @ConfigNode("Patch.enable-raw-title-in-vanilla-inventory")
+    @Suppress("unused")
+    @ConfigNode("Menu.enable-raw-title-in-vanilla-inventory")
     var enableRawTitleInVanillaInventory = false
         private set(value) {
             field = value

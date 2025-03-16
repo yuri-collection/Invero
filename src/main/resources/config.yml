@@ -6,6 +6,13 @@ Workspaces:
   paths:
     - 'plugins/Invero/workspace'
 
+Menu:
+  # 是否默认使用虚拟菜单
+  virtual-by-default: false
+  # 允许在 Vanilla Inventory 中使用 Raw Title
+  # 详见 https://github.com/TabooLib/taboolib/blob/dev/6.2.3/module/bukkit/bukkit-ui/src/main/kotlin/taboolib/module/ui/MenuBuilder.kt#L40
+  enable-raw-title-in-vanilla-inventory: false
+
 Database:
   # Local: SQLITE
   # External: SQL, MONGODB
@@ -17,8 +24,3 @@ Database:
     password: root
     database: test
     table: invero_data
-
-Patch:
-  # 允许在 Vanilla Inventory 中使用 Raw Title
-  # 详见 https://github.com/TabooLib/taboolib/blob/dev/6.2.3/module/bukkit/bukkit-ui/src/main/kotlin/taboolib/module/ui/MenuBuilder.kt#L40
-  enable-raw-title-in-vanilla-inventory: false

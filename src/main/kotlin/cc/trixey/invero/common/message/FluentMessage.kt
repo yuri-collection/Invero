@@ -23,7 +23,6 @@ import taboolib.platform.compat.replacePlaceholder
  * 文本源中的 § 保留为[[COLOR_CHAR]]
  * 替换 kether inline 变量
  * 替换 placeholderAPI 变量
- * 翻译 miniMessage 格式
  * 翻译通用颜色格式
  * 还原 [[COLOR_CHAR]] 为 §
  */
@@ -50,13 +49,11 @@ private const val COLOR_CHAR = "[[COLOR_CHAR]]"
  * - Kether Inline
  * - Placeholder API
  * - TabooLib Colored
- * - MiniMessage Component Send (if supported) (else send noraml message)
  */
 fun String.sendFormattedMiniMessageComponent(player: Player, variables: Map<String, Any> = emptyMap()) =
     KetherHandler.parseInline(this, player, variables)
         .replacePlaceholder(player)
         .colored()
-//        .parseMiniMessageAndSend(player)
 
 /**
  * 发送 TabooLib ComponentText

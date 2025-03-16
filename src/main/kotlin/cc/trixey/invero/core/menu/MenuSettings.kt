@@ -1,5 +1,6 @@
 package cc.trixey.invero.core.menu
 
+import cc.trixey.invero.common.api.InveroSettings
 import cc.trixey.invero.core.serialize.InventoryTypeSerializer
 import cc.trixey.invero.core.serialize.MenuTitleSerializer
 import cc.trixey.invero.ui.common.ContainerType
@@ -21,7 +22,7 @@ class MenuSettings(
     @Serializable(with = MenuTitleSerializer::class)
     val title: MenuTitle,
     var rows: Int?,
-    val virtual: Boolean = false,
+    val virtual: Boolean = InveroSettings.virtualByDefault,
     @Serializable(with = InventoryTypeSerializer::class)
     val type: InventoryType = InventoryType.CHEST,
     @SerialName("hide-player-inventory")

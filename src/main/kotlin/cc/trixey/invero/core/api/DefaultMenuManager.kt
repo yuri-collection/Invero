@@ -7,6 +7,7 @@ import cc.trixey.invero.common.api.InveroSettings
 import cc.trixey.invero.common.api.SerializeResult
 import cc.trixey.invero.common.api.SerializeResult.State.*
 import cc.trixey.invero.common.util.alert
+import cc.trixey.invero.common.util.findInJar
 import cc.trixey.invero.common.util.prettyPrint
 import cc.trixey.invero.core.AgentPanel
 import cc.trixey.invero.core.BaseMenu
@@ -19,23 +20,23 @@ import cc.trixey.invero.core.serialize.BaseMenuSerializer
 import cc.trixey.invero.core.serialize.hocon.PatchedLoader
 import cc.trixey.invero.core.util.session
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
 import org.bukkit.command.CommandSender
 import taboolib.common.LifeCycle
+import taboolib.common.io.newFile
 import taboolib.common.platform.Awake
 import taboolib.common.platform.PlatformFactory
 import taboolib.common.platform.function.console
+import taboolib.common.platform.function.getJarFile
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.function.submitAsync
 import taboolib.common5.FileWatcher
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Type
 import taboolib.module.lang.sendLang
-import taboolib.platform.util.bukkitPlugin
 import taboolib.platform.util.onlinePlayers
 import taboolib.platform.util.sendLang
 import java.io.File
@@ -87,8 +88,6 @@ class DefaultMenuManager : InveroMenuManager {
         serializersModule = module
         explicitNulls = false
     }
-
-    private val defaultWorkspace = File(bukkitPlugin.dataFolder, "workspace")
 
     private val menus = ConcurrentHashMap<String, BaseMenu>()
 
@@ -161,7 +160,7 @@ class DefaultMenuManager : InveroMenuManager {
             menus.values.forEach { it.unregister() }
         }
         // init workspaces
-        val workspaces = getWorkspaces()
+        val workspaces = initWorkspaces()
 
         if (workspaces.isEmpty()) {
             receiver.sendLang("menu-loader-workspace-empty")
@@ -236,16 +235,6 @@ class DefaultMenuManager : InveroMenuManager {
         return json as T
     }
 
-    private fun getWorkspaces(): List<File> {
-        val settings = InveroSettings.workspaces
-
-        return if (settings.isEmpty()) {
-            listOf(defaultWorkspace.also { it.mkdirs() })
-        } else {
-            settings.map { path -> File(path).also { it.mkdirs() } }
-        }.filter { it.isDirectory }
-    }
-
     private val menuDeclarations = mutableSetOf("menu", "title")
 
     companion object {
@@ -258,6 +247,33 @@ class DefaultMenuManager : InveroMenuManager {
                 Invero.API.getMenuManager().reload()
             }
         }
+
+        fun initWorkspaces(): List<File> {
+            val list = ArrayList<File>()
+
+            for (path in InveroSettings.workspaces) {
+                val file = File(path)
+                if (file.isDirectory) {
+                    // release defaults if not exist
+                    if (!file.exists()) releaseWorkspace(file)
+                    list.add(file)
+                }
+            }
+
+            return list
+        }
+
+        /**
+         * 复制默认工作空间内文件到默认工作空间
+         */
+        fun releaseWorkspace(folder: File) {
+            findInJar(getJarFile()) {
+                !it.isDirectory && it.name.startsWith("default/")
+            }.forEach {
+                newFile(File(folder, it.first.name.substringAfter('/'))).writeBytes(it.second.readBytes())
+            }
+        }
+
     }
 
 }
