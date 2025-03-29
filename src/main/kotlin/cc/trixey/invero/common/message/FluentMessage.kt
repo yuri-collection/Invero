@@ -8,9 +8,6 @@ import taboolib.module.chat.HexColor
 import taboolib.module.chat.component
 import taboolib.module.nms.MinecraftVersion
 import taboolib.platform.compat.replacePlaceholder
-import taboolib.platform.BukkitPlugin
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.kyori.adventure.platform.bukkit.BukkitAudiences
 
 /**
  * Invero
@@ -56,19 +53,10 @@ private const val COLOR_CHAR = "[[COLOR_CHAR]]"
 fun String.sendFormattedMiniMessageComponent(player: Player, variables: Map<String, Any> = emptyMap()) {
     val processed = KetherHandler.parseInline(this, player, variables)
         .replacePlaceholder(player)
-    
-    try {
-        // 使用Adventure API解析MiniMessage格式
-        val miniMessage = MiniMessage.miniMessage()
-        val component = miniMessage.deserialize(processed)
-        
-        // 使用Adventure API发送消息
-        val audience = BukkitAudiences.create(BukkitPlugin.getInstance())
-        audience.player(player).sendMessage(component)
-    } catch (e: Exception) {
-        // 如果Adventure API不可用，回退到普通消息
-        player.sendMessage(processed.colored())
-    }
+
+    val component = Message.parseAdventure(processed)
+
+    bukkitAudiences.player(player).sendMessage(component)
 }
 
 /**

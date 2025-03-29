@@ -9,7 +9,9 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.AMPERSAND_CHAR
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.SECTION_CHAR
+import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import taboolib.module.nms.MinecraftVersion
+import taboolib.platform.BukkitPlugin
 
 /**
  * Message
@@ -18,6 +20,11 @@ import taboolib.module.nms.MinecraftVersion
  * @since 2025/3/8 14:33
  */
 object Message {
+
+    @JvmStatic
+    val bukkitAudiences by lazy {
+        BukkitAudiences.create(BukkitPlugin.getInstance())
+    }
 
     @JvmStatic
     val gsonBuilder by lazy {
