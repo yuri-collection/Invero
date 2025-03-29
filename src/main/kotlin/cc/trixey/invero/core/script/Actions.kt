@@ -81,6 +81,15 @@ internal fun actionEco() = scriptParser {
                     "has" -> player().getBalance() >= amount
                     "take" -> player().withdrawBalance(amount)
                     "give" -> player().depositBalance(amount)
+                    "set" -> {
+                        val currentBalance = player().getBalance()
+                        if (currentBalance > amount) {
+                            player().withdrawBalance(currentBalance - amount)
+                        } else if (currentBalance < amount) {
+                            player().depositBalance(amount - currentBalance)
+                        }
+                        true
+                    }
                     else -> error("Unknown eco method: $method")
                 }
             }
@@ -88,7 +97,7 @@ internal fun actionEco() = scriptParser {
     }
 }
 
-@InveroKetherParser(["playerpoints", "points"])
+@InveroKetherParser(["playerpoints", "points", "point"])
 internal fun actionPoints() = scriptParser {
     if (!it.hasNext()) actionNow { HookPlayerPoints.look(player()) }
     else {
@@ -104,6 +113,15 @@ internal fun actionPoints() = scriptParser {
                     "has" -> (HookPlayerPoints.look(player()) ?: 0) >= amount
                     "take" -> HookPlayerPoints.take(player(), amount)
                     "give" -> HookPlayerPoints.add(player(), amount)
+                    "set" -> {
+                        val currentPoints = HookPlayerPoints.look(player()) ?: 0
+                        if (currentPoints > amount) {
+                            HookPlayerPoints.take(player(), currentPoints - amount)
+                        } else if (currentPoints < amount) {
+                            HookPlayerPoints.add(player(), amount - currentPoints)
+                        }
+                        true
+                    }
                     else -> error("Unknown eco method: $method")
                 }
             }
