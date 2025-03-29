@@ -11,7 +11,7 @@ plugins {
 
 taboolib {
 
-    version { taboolib = "6.2.3" }
+    version { taboolib = "6.2.3-d89e06f" }
 
     env {
         // 镜像中央仓库
