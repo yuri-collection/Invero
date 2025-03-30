@@ -56,7 +56,7 @@ fun String.sendFormattedMiniMessageComponent(player: Player, variables: Map<Stri
 
     val component = Message.parseAdventure(processed)
 
-    bukkitAudiences.player(player).sendMessage(component)
+    Message.bukkitAudiences.player(player).sendMessage(component)
 }
 
 /**
