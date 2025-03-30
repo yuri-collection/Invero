@@ -157,6 +157,7 @@ class CraftingPanel(
         }
 
         renderStorage()
+        runCallback()
         return amount
     }
 
@@ -182,6 +183,7 @@ class CraftingPanel(
     private fun ItemStack?.storeAt(slot: Int) {
         if (this == null) storeDel(slot)
         else storage[slot] = this
+        runCallback()
     }
 
     private fun storeDel(slot: Int) {

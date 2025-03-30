@@ -199,8 +199,8 @@ class InventoryVanilla(override val window: BukkitWindow) : ProxyBukkitInventory
     fun handleItemsMove(e: InventoryClickEvent) {
         // 默认取消
         e.isCancelled = true
-        if (!moveCallback(e)) return
-
+        if (!collectCallback(e)) return
+        
         val slot = e.rawSlot
         // playerInventory -> IO Panel
         if (slot > window.type.slotsContainer.last) {
