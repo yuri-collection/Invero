@@ -8,12 +8,15 @@ import cc.trixey.invero.common.message.translateFormattedMessage
 import org.bukkit.entity.Player
 import taboolib.common5.cdouble
 import taboolib.common5.cint
+import taboolib.library.kether.ParsedAction
 import taboolib.module.kether.*
 import taboolib.platform.compat.depositBalance
 import taboolib.platform.compat.getBalance
 import taboolib.platform.compat.withdrawBalance
 import taboolib.platform.util.onlinePlayers
 import java.util.concurrent.CompletableFuture
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Invero
@@ -126,5 +129,121 @@ internal fun actionPoints() = scriptParser {
                 }
             }
         }
+    }
+}
+
+/**
+ * 示例: 
+ * max 1 10       -> 返回10
+ * max [ 1 7 9 ]  -> 返回9
+ */
+@InveroKetherParser(["max"])
+internal fun actionMax() = scriptParser {
+    val arrayMode = it.hasNext() && it.nextToken() == "["
+    
+    // 双值或数组收集
+    val values = mutableListOf<ParsedAction<*>>()
+    
+    if (arrayMode) {
+        // 数组形式 - 收集所有值直到遇到结束符号 ]
+        while (it.hasNext()) {
+            it.mark()
+            if (it.nextToken() == "]") {
+                break
+            }
+            it.reset()
+            values.add(it.nextParsedAction())
+        }
+    } else {
+        // 双值形式
+        if (it.hasNext()) {
+            values.add(it.nextParsedAction())
+            if (it.hasNext()) {
+                values.add(it.nextParsedAction())
+            }
+        }
+    }
+    
+    actionNow {
+        if (values.isEmpty()) {
+            return@actionNow 0.0
+        }
+        
+        val results = mutableListOf<Double>()
+        for (action in values) {
+            try {
+                val result = newFrame(action).run<Any>().getNow(null)
+                if (result != null) {
+                    val doubleValue = when (result) {
+                        is Number -> result.toDouble()
+                        is String -> result.toDoubleOrNull() ?: 0.0
+                        else -> 0.0
+                    }
+                    results.add(doubleValue)
+                }
+            } catch (e: Exception) {
+                // 忽略错误值
+            }
+        }
+        
+        if (results.isEmpty()) 0.0 else results.maxOrNull() ?: 0.0
+    }
+}
+
+/**
+ * 示例:
+ * min 1 10       -> 返回1
+ * min [ 1 7 9 ]  -> 返回1
+ */
+@InveroKetherParser(["min"])
+internal fun actionMin() = scriptParser {
+    val arrayMode = it.hasNext() && it.nextToken() == "["
+    
+    // 双值或数组收集
+    val values = mutableListOf<ParsedAction<*>>()
+    
+    if (arrayMode) {
+        // 数组形式 - 收集所有值直到遇到结束符号 ]
+        while (it.hasNext()) {
+            it.mark()
+            if (it.nextToken() == "]") {
+                break
+            }
+            it.reset()
+            values.add(it.nextParsedAction())
+        }
+    } else {
+        // 双值形式
+        if (it.hasNext()) {
+            values.add(it.nextParsedAction())
+            if (it.hasNext()) {
+                values.add(it.nextParsedAction())
+            }
+        }
+    }
+    
+    actionNow {
+        if (values.isEmpty()) {
+            return@actionNow 0.0
+        }
+        
+        val results = mutableListOf<Double>()
+        for (action in values) {
+            try {
+                val result = newFrame(action).run<Any>().getNow(null)
+                if (result != null) {
+                    val doubleValue = when (result) {
+                        is Number -> result.toDouble()
+                        is String -> result.toDoubleOrNull() ?: 0.0
+                        else -> 0.0
+                    }
+                    results.add(doubleValue)
+                }
+            } catch (e: Exception) {
+                // 忽略错误值
+            }
+        }
+        
+        if (results.isEmpty()) 0.0 else results.minOrNull() ?: 0.0
     }
 }
