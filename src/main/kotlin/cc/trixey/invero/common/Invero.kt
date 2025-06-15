@@ -1,9 +1,14 @@
 package cc.trixey.invero.common
 
 import cc.trixey.invero.common.api.InveroAPI
+import cc.trixey.invero.common.api.InveroSettings
+import cc.trixey.invero.core.util.UpdateChecker
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
 import taboolib.common.platform.PlatformFactory
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.console
+import taboolib.module.lang.sendLang
 import taboolib.platform.util.bukkitPlugin
 
 /**
@@ -16,6 +21,9 @@ import taboolib.platform.util.bukkitPlugin
 object Invero : Plugin() {
 
     val API: InveroAPI by lazy { PlatformFactory.getAPI() }
+    
+    // 更新检查器
+    val updateChecker by lazy { UpdateChecker() }
 
     override fun onEnable() {
         """
@@ -29,6 +37,17 @@ object Invero : Plugin() {
         §7By Arasple, Maintained by 8aka Team
         §7QQ群: §f489868834 §8| §7GitHub: §fhttps://github.com/8aka-Team/Invero
         """.lines().forEach { console().sendMessage(it) }
+        
+        // 检查更新
+        checkUpdate()
     }
-
+    
+    /**
+     * 检查更新
+     */
+    private fun checkUpdate() {
+        if (InveroSettings.updateCheckerEnabled) {
+            updateChecker.sendUpdateInfoToConsole()
+        }
+    }
 }

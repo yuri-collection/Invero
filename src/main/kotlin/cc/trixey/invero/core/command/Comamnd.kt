@@ -2,6 +2,7 @@ package cc.trixey.invero.core.command
 
 import cc.trixey.invero.core.command.sub.CommandItem
 import cc.trixey.invero.core.command.sub.CommandMenu
+import cc.trixey.invero.core.command.sub.CommandUpdate
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
@@ -27,5 +28,8 @@ object Comamnd {
 
     @CommandBody
     val item = CommandItem
+    
+    @CommandBody
+    val update = CommandUpdate
 
 }

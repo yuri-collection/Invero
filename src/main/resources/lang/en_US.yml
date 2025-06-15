@@ -38,4 +38,9 @@ paste-success: '&8[&3I&8] &7Please follow this link to view the related text: &a
 paste-config-loaded: '&8[&3I&8] &7Paste configuration loaded, current service: &f{0}'
 paste-service-error: '&8[&3I&8] &cPaste service error: &7{0}'
 
+update-checking: '&8[&3I&8] &7Checking for updates...'
+update-available: '&8[&3I&8] &eNew version available! Current version: &c{0}&e, Latest version: &a{1}'
+update-url: '&8[&3I&8] &eVisit: &bhttps://invero.8aka.org/download &eto get the latest version'
+up-to-date: '&8[&3I&8] &7You are using the latest version!'
+
 throwable-print: '&8[&3I&8] &cAn error occurred.'
