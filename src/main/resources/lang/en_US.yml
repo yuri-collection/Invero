@@ -33,7 +33,9 @@ menu-list-item:
 item-air: '&8[&3I&8] &7Target item is empty. Operation cannot be continued.'
 
 paste-init: '&8[&3I&8] &7Creating paste content for you, please wait...'
-paste-failed: '&8[&3I&8] &7An error occurred while creating &fpaste.gg &7text. '
+paste-failed: '&8[&3I&8] &7An error occurred while creating clipboard content. Operation cannot continue.'
 paste-success: '&8[&3I&8] &7Please follow this link to view the related text: &a{0}'
+paste-config-loaded: '&8[&3I&8] &7Paste configuration loaded, current service: &f{0}'
+paste-service-error: '&8[&3I&8] &cPaste service error: &7{0}'
 
 throwable-print: '&8[&3I&8] &cAn error occurred.'
