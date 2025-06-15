@@ -1,8 +1,12 @@
 Kether:
+  # 自动翻译变量 | auto translate placeholder
   auto-placeholder-translate: true
 
+# 工作空间
 Workspaces:
+  # 匹配文件名加载（正则表达式） | filter file name
   filter: '^(?![#!]).*\.(?i)(conf|hocon|yaml|yml|toml|json)$'
+  # 自定义工作路径 | custom workspace path
   paths:
     - 'plugins/Invero/workspace'
 
@@ -12,6 +16,11 @@ Menu:
   # 允许在 Vanilla Inventory 中使用 Raw Title
   # 详见 https://github.com/TabooLib/taboolib/blob/dev/6.2.3/module/bukkit/bukkit-ui/src/main/kotlin/taboolib/module/ui/MenuBuilder.kt#L40
   enable-raw-title-in-vanilla-inventory: false
+  
+  # 默认物品名称颜色 | default item name color
+  default-name-color: "§7"
+  # 默认物品描述颜色 | default item lore color
+  default-lore-color: "§7"
 
 Database:
   # Local: SQLITE
@@ -25,8 +34,20 @@ Database:
     database: test
     table: invero_data
 
+Patch:
+  # 允许在 Vanilla Inventory 中使用 Raw Title
+  # 详见 https://github.com/TabooLib/taboolib/blob/dev/6.2.3/module/bukkit/bukkit-ui/src/main/kotlin/taboolib/module/ui/MenuBuilder.kt#L40
+  enable-raw-title-in-vanilla-inventory: false
+
+# 更新检查设置 | update check
+update-checker:
+  # 是否启用更新检查 | enable update check?
+  enabled: true
+  # 检查频率（天） | check interval (days)
+  check-interval-days: 1
+
 Paste:
-  # 支持的服务类型: pastegg, lucko, pastebin
+  # 支持 | support: pastegg, lucko, pastebin
   service-type: lucko
 
   services:
